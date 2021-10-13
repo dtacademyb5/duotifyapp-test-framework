@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.LoginPage;
 import utilities.ConfigReader;
 
 public class LoginTests extends TestBase{
@@ -15,12 +16,16 @@ public class LoginTests extends TestBase{
 
 
     @Test
-    public void positiveLogin(){
+    public void positiveLoginPageObjectModelStyle(){
         driver.get(ConfigReader.getProperty("url"));
-        driver.findElement(By.id("loginUsername")).sendKeys(ConfigReader.getProperty("username"));
-        driver.findElement(By.id("loginPassword")).sendKeys(ConfigReader.getProperty("password"));
-        driver.findElement(By.name("loginButton")).click();
+        LoginPage loginPage = new LoginPage();
+        loginPage.username.sendKeys(ConfigReader.getProperty("username"));
+        loginPage.password.sendKeys(ConfigReader.getProperty("password"));
+        loginPage.loginButton.click();
+
         Assert.assertTrue(driver.getTitle().contains("Welcome"));
+
+
     }
 
     @Test

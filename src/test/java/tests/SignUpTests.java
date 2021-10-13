@@ -28,7 +28,7 @@ public class SignUpTests extends TestBase{
         Faker faker = new Faker();
 
         driver.get(ConfigReader.getProperty("url"));
-        driver.findElement(By.id("hideLoginLink")).click();
+        driver.findElement(By.id("hideLogin")).click();
         driver.findElement(By.id("username")).sendKeys(faker.name().username());
         driver.findElement(By.id("firstName")).sendKeys(faker.name().firstName());
         driver.findElement(By.id("lastName")).sendKeys(faker.name().lastName());
@@ -70,33 +70,12 @@ public class SignUpTests extends TestBase{
 
 
     @Test
-    public void negativeSignUp(){
+    public void negativeSignUp() throws InterruptedException {
 
         Faker faker = new Faker();
 
         driver.get(ConfigReader.getProperty("url"));
-        driver.findElement(By.id("hideLoginLink")).click();
-        driver.findElement(By.id("username")).sendKeys("usr");
-        driver.findElement(By.id("firstName")).sendKeys("usr");
-        driver.findElement(By.id("lastName")).sendKeys(faker.name().lastName());
-        String email = faker.internet().emailAddress();
-        driver.findElement(By.id("email")).sendKeys(email);
-        driver.findElement(By.id("email2")).sendKeys(email);
-        driver.findElement(By.id("password")).sendKeys("dt123");
-        driver.findElement(By.id("password2")).sendKeys("dt123");
-        driver.findElement(By.name("registerButton")).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
-        Assert.assertFalse(driver.getCurrentUrl().equals("http://duotifyapp.us-east-2.elasticbeanstalk.com/browse.php?"));
-    }
-
-
-    @Test
-    public void negativeSignUp2(){
-
-        Faker faker = new Faker();
-
-        driver.get(ConfigReader.getProperty("url"));
+        Thread.sleep(2000);
         driver.findElement(By.id("hideLogin")).click();
         driver.findElement(By.id("username")).sendKeys("usr");
         driver.findElement(By.id("firstName")).sendKeys("usr");
@@ -111,6 +90,9 @@ public class SignUpTests extends TestBase{
 
         Assert.assertFalse(driver.getCurrentUrl().equals("http://duotifyapp.us-east-2.elasticbeanstalk.com/browse.php?"));
     }
+
+
+
 
 
 

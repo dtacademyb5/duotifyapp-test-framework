@@ -12,6 +12,15 @@ import org.openqa.selenium.safari.SafariDriver;
 
 public class Driver {
 
+
+    /*
+      This utility class is used to control the initialization of a WebDriver.
+      This class uses Singleton design pattern, because we need a single instance of a WebDriver at any point during
+      the execution of our tests.
+      Because it is a common issue in testing frameworks to accidentally initialize multiple WebDrivers which leads to test failures.
+      Singleton pattern prevents that issue.
+     */
+
     private static WebDriver driver;
 
     private Driver(){}
