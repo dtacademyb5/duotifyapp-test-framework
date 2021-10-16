@@ -26,11 +26,21 @@ public class Driver {
     private Driver(){}
 
 
+//    public static WebDriver getDriver(){
+//        return getDriver(null);
+//    }
+
+
     public static WebDriver getDriver(){
 
         if(driver == null){
 
-        String browserType = ConfigReader.getProperty("browser");
+        String browserType = System.getProperty("browser");
+
+         if(browserType == null){
+             browserType = ConfigReader.getProperty("browser");
+         }
+
 
            switch (browserType){
 

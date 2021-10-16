@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
-public class PageBase {
+public abstract class PageBase {
 
     /*
        This class is used to store common elements for all pages

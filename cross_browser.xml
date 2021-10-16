@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Crossbrowser Tests">
+    <test name="Chrome test">
+        <parameter name="browser" value="chrome"></parameter>
+
+        <classes>
+            <class name="tests.LoginTests"></class>
+        </classes>
+    </test>
+
+
+    <test name="Edge test">
+        <parameter name="browser" value="edge"></parameter>
+
+        <classes>
+            <class name="tests.LoginTests"></class>
+        </classes>
+    </test>
+
+
+    <test name="Headless Chrome test">
+        <parameter name="browser" value="chromeHeadless"></parameter>
+
+        <classes>
+            <class name="tests.LoginTests"></class>
+        </classes>
+    </test>
+</suite>
