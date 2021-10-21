@@ -21,7 +21,7 @@ public class Driver {
       Singleton pattern prevents that issue.
      */
 
-    private static WebDriver driver;
+    private static ThreadLocal<WebDriver> drivers = new ThreadLocal<>();
 
     private Driver(){}
 
@@ -31,9 +31,9 @@ public class Driver {
 //    }
 
 
-    public static WebDriver getDriver(){
+    public static synchronized WebDriver getDriver(){
 
-        if(driver == null){
+        if(drivers.get() == null){
 
         String browserType = System.getProperty("browser");
 
@@ -46,38 +46,38 @@ public class Driver {
 
                case "chrome":
                    WebDriverManager.chromedriver().setup();
-                   driver = new ChromeDriver();
+                   drivers.set(new ChromeDriver());
                    break;
                case "edge":
                    WebDriverManager.edgedriver().setup();
-                   driver = new EdgeDriver();
+                   drivers.set( new EdgeDriver());
                    break;
                case "firefox":
                    WebDriverManager.firefoxdriver().setup();
-                   driver = new FirefoxDriver();
+                   drivers.set(new FirefoxDriver());
                    break;
                case "safari":
                    WebDriverManager.safaridriver().setup();
-                   driver = new SafariDriver();
+                   drivers.set(new SafariDriver());
                    break;
                case "chromeHeadless":
                    ChromeOptions chromeOptions = new ChromeOptions();
                    chromeOptions.setHeadless(true);
                    WebDriverManager.chromedriver().setup();
-                   driver = new ChromeDriver(chromeOptions);
+                   drivers.set(new ChromeDriver(chromeOptions));
                    break;
                case "firefoxHeadless":
                    FirefoxOptions firefoxOptions = new FirefoxOptions();
                    firefoxOptions.setHeadless(true);
                    WebDriverManager.firefoxdriver().setup();
-                   driver = new FirefoxDriver(firefoxOptions);
+                   drivers.set(new FirefoxDriver(firefoxOptions));
                    break;
                case "edgeHeadless":
                    EdgeOptions edgeOptions = new EdgeOptions();
                    edgeOptions.addArguments("headless");
                    edgeOptions.addArguments("disable-gpu");
                    WebDriverManager.edgedriver().setup();
-                   driver = new EdgeDriver(edgeOptions);
+                   drivers.set(new EdgeDriver(edgeOptions));
                    break;
                default:
                    System.out.println("Invalid driver");
@@ -88,16 +88,17 @@ public class Driver {
 
         }
 
-        return driver;
+        return drivers.get();
 
 
     }
 
 
-    public static void quitDriver(){
-        if(driver != null){
-            driver.quit();
-            driver = null; // quitting does not make driver null;
+    public static synchronized void quitDriver(){
+        if(drivers.get() != null){
+            drivers.get().quit();
+            drivers.remove();
+
         }
     }
 

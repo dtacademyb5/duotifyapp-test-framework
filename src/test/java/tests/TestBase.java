@@ -14,6 +14,7 @@ import utilities.SeleniumUtils;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.time.Duration;
 
 public abstract class TestBase {
 
@@ -53,6 +54,10 @@ public abstract class TestBase {
     public void setup(Method method){
 
         driver = Driver.getDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+
 
         logger = report.createTest(method.getName());
     }
